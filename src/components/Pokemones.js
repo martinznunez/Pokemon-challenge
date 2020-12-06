@@ -1,5 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { PokemonContext } from "../context/pokemonContext";
+
+import Error from "./Error";
+
 import { useHistory } from "react-router-dom";
 import styled from "@emotion/styled";
 
@@ -181,8 +184,6 @@ const Pokemones = () => {
     history.push(`/pokemonNext/:${id + 1}`);
   };
 
-  console.log(filter);
-
   return (
     <>
       {filter ? (
@@ -245,7 +246,9 @@ const Pokemones = () => {
           ))}
           <Btn onClick={HashClick}>Volver</Btn>
         </ContainerGeneral>
-      ) : null}
+      ) : (
+        <Error />
+      )}
     </>
   );
 };

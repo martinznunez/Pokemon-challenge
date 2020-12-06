@@ -5,8 +5,10 @@ export const PokemonContext = createContext();
 
 const PokemonProvider = (props) => {
   const [poke, setPoke] = useState([]);
+  const [error, setError] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
-  const [filter, setFilter] = useState();
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     // const promesas = [];
@@ -30,7 +32,9 @@ const PokemonProvider = (props) => {
 
         // const todosLosPokemones = await Promise.all(promesas);
         setPoke(todosLosPokemones);
+        setError(false);
       } catch (error) {
+        setError(true);
         console.log("fallo");
       }
     };
@@ -43,7 +47,11 @@ const PokemonProvider = (props) => {
       value={{
         poke,
         setFilter,
+        setError,
         filter,
+        setInputValue,
+        inputValue,
+        error,
       }}
     >
       {props.children}
