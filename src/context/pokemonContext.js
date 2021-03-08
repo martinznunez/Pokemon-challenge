@@ -16,10 +16,12 @@ const PokemonProvider = (props) => {
     const getPoke = async () => {
       try {
         const url = "https://pokeapi.co/api/v2/pokemon/?limit=50";
+
         const respuesta = await axios.get(url);
 
         for await (let pokemon of respuesta.data.results) {
           const respuestaPokemon = await axios.get(pokemon.url);
+
           todosLosPokemones.push(respuestaPokemon);
         }
         // segunda solucion, obtener pokemon realizar una llamada x cada poke
@@ -34,8 +36,7 @@ const PokemonProvider = (props) => {
         setPoke(todosLosPokemones);
         setError(false);
       } catch (error) {
-        setError(true);
-        console.log("fallo");
+        return setError(true);
       }
     };
 
@@ -50,6 +51,7 @@ const PokemonProvider = (props) => {
         setError,
         filter,
         setInputValue,
+
         inputValue,
         error,
       }}

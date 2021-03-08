@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Pokemon from "./Pokemon";
 import styled from "@emotion/styled";
 import From from "./From";
+import { PokemonContext } from "../context/pokemonContext";
+
+import Error from "./Error";
 
 const ContainerGeneralLista = styled.div`
   margin-top: 20px;
@@ -13,12 +16,20 @@ const ContainerGeneralLista = styled.div`
 `;
 
 const ListaPokemones = () => {
+  const { error } = useContext(PokemonContext);
+
   return (
     <>
-      <From />
-      <ContainerGeneralLista>
-        <Pokemon />
-      </ContainerGeneralLista>
+      {error === true ? (
+        <Error error={error} />
+      ) : (
+        <>
+          <From />
+          <ContainerGeneralLista>
+            <Pokemon />
+          </ContainerGeneralLista>
+        </>
+      )}
     </>
   );
 };

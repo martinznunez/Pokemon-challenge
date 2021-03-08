@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { PokemonContext } from "../context/pokemonContext";
+import { useParams } from "react-router-dom";
 
 import Error from "./Error";
 
@@ -15,12 +16,14 @@ const ContainerGeneral = styled.div`
 `;
 
 const ContainerPokemon = styled.div`
-  border: 5px solid rgba(26, 196, 187, 0.95);
-  background: #80ded9;
   display: flex;
+  background: linear-gradient(225deg, #e8f7f7, #c3d0d0);
+  box-shadow: -7px 7px 22px #bbc7c7, 7px -7px 22px #f7ffff;
   text-align: center;
   align-items: center;
+  border: solid rgba(26, 196, 187, 0.95);
   width: 100%;
+  border-radius: 30px;
   justify-content: center;
   @media screen and (min-width: 800px) {
     width: 80%;
@@ -77,7 +80,8 @@ const ContainerMedidas = styled.div`
 
   p {
     font-size: 1.3rem;
-    color: #fff;
+
+    color: #4f4f4f;
   }
   span {
     font-size: 1rem;
@@ -150,38 +154,31 @@ const Btn = styled.button`
 `;
 
 const Pokemones = () => {
+  const { id } = useParams();
+
   const history = useHistory();
 
   const HashClick = () => {
     history.push("/");
   };
 
-  const { poke, setFilter, filter } = useContext(PokemonContext);
-
-  //obtener id pasado por history
+  const { poke, setFilter, filter, error } = useContext(PokemonContext);
 
   useEffect(() => {
-    const regex = /(\d+)/g;
-
-    let obtenerIdPoke = history.location.pathname;
-    const id = obtenerIdPoke.match(regex);
-
-    //filter para iprimir el seleccionado desde listado pokemones
-
     const filtrar = poke.filter((item) => Number(item.data.id) === Number(id));
     setFilter(filtrar);
-  }, [history.location.pathname, poke, setFilter]);
+  }, [history.location.pathname, id, poke, setFilter]);
 
   let kg = 0.45359237;
 
   let cm = 2.54;
 
   const HashClickPrevious = (id) => {
-    history.push(`/pokemonPrevious/:${id - 1}`);
+    history.push(`/pokemonPrevious/${id - 1}`);
   };
 
   const HashClickNext = (id) => {
-    history.push(`/pokemonNext/:${id + 1}`);
+    history.push(`/pokemonNext/${id + 1}`);
   };
 
   return (
@@ -247,7 +244,7 @@ const Pokemones = () => {
           <Btn onClick={HashClick}>Volver</Btn>
         </ContainerGeneral>
       ) : (
-        <Error />
+        <Error error={error} />
       )}
     </>
   );

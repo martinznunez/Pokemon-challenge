@@ -26,7 +26,7 @@ function App() {
               <Route exact path="/" component={ListaPokemones} />
               <Route exact path="/pokemon/:id" component={Pokemones} />
               <Route exact path="/pokemonNext/:id" component={Next} />
-              <Route exact path="/pokemonPrevious/:id" component={Previous} />
+              <Route path="/pokemonPrevious/:id" component={Previous} />
             </Switch>
           </ContainerGeneral>
         </PokemonProvider>

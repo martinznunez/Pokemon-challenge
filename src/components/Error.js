@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import { PokemonContext } from "../context/pokemonContext";
 import styled from "@emotion/styled";
 
 const MensajeError = styled.p`
@@ -11,13 +10,11 @@ const MensajeError = styled.p`
   color: #fff;
 `;
 
-const Error = () => {
-  const { error } = useContext(PokemonContext);
-
+const Error = ({ error }) => {
   return (
     <MensajeError>
       {" "}
-      {error ? "Algo a fallado, intentelo de nuevo..." : null}{" "}
+      {error === true ? "Algo a fallado, intentelo de nuevo..." : null}
     </MensajeError>
   );
 };
